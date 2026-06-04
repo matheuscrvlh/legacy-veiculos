@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --cor-primaria: #000000;
+  --cor-secundaria: #000000;
+  --cor-botao: #000000;
+  --cor-hover: #000000;
+  --cor-active: #000000;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #fff;
+  color: #333;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+@layer utilities {
+  .btn-primario {
+    @apply px-6 py-3 font-bold uppercase text-white cursor-pointer transition-all duration-300;
+    background-color: var(--cor-botao);
+  }
+  .btn-primario:hover {
+    background-color: var(--cor-hover);
+    @apply scale-105;
+  }
+  .btn-primario:active {
+    background-color: var(--cor-active);
+    @apply scale-98;
+  }
+
+  .text-primaria {
+    color: var(--cor-primaria);
+  }
+
+  .bg-primaria {
+    background-color: var(--cor-primaria);
+  }
+
+  .border-primaria {
+    border-color: var(--cor-primaria);
+  }
+
+  .scale-98 {
+    transform: scale(0.98);
+  }
+}
+
+/* Range slider custom */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #474747;
+  cursor: pointer;
+  pointer-events: all;
+}

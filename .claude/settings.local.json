@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Recurse \"C:\\\\Users\\\\Matheus Carvalho\\\\Desktop\\\\TRABALHO\\\\DEV\\\\PROJETOS\\\\legacy-veiuclos-novo\\\\backend\\\\uploads\")",
+      "Bash(Select-Object FullName, PSIsContainer)",
+      "Bash(Head -60)"
+    ]
+  }
+}
