@@ -7,30 +7,50 @@ export default function LocalizacaoSection() {
   if (!loc) return null;
 
   return (
-    <div className="px-[30px] max-w-[80vw] w-[1600px] mx-auto my-[10px] flex flex-row justify-between gap-[30px] max-[1500px]:max-w-full max-lg:flex-col max-lg:items-center max-lg:max-w-full">
-      <div className="w-[600px] text-left max-lg:w-[80vw]">
-        <div className="text-[1.5rem] font-bold uppercase text-[#333] text-center mt-[30px] mb-[70px] max-lg:text-[1.2rem] max-lg:w-[80vw] max-[500px]:mt-[30px] max-[500px]:mb-[30px]">
-          <p className="text-[60px] font-light text-left mt-[-30px] p-0 max-[500px]:text-[2.5rem]">CONFIRA</p>
-          <p className="text-[60px] font-bold text-left mt-[-30px] p-0 max-[500px]:text-[2.5rem]" style={{ color: 'var(--cor-primaria)' }}>NOSSA</p>
-          <p className="text-[60px] font-light text-left mt-[-30px] p-0 max-[500px]:text-[2.5rem]">LOCALIZAÇÃO</p>
-        </div>
-        <div className="mt-[20px]">
-          <h2 className="text-[1.2rem] font-bold text-[#333] mb-[5px]">Endereço:</h2>
-          <h3 className="text-base text-[#666] mb-[20px]">{loc.endereco || 'Endereço não disponível'}</h3>
-          <h2 className="text-[1.2rem] font-bold text-[#333] mb-[5px]">Horário de atendimento:</h2>
-          <h3 className="text-base text-[#666] mb-[20px]">{loc.horario || 'Horário não disponível'}</h3>
+    <section className="w-full bg-[#181818] flex flex-col lg:flex-row min-h-[480px]">
+      {/* Info */}
+      <div className="lg:w-[40%] flex flex-col justify-center px-[8vw] py-16 max-lg:px-6 max-lg:py-10">
+        <p className="text-xs font-bold uppercase tracking-[5px] mb-4" style={{ color: 'var(--cor-primaria)' }}>
+          ONDE ESTAMOS
+        </p>
+        <h2 className="text-[2.8rem] font-black uppercase text-white leading-tight mb-8 max-lg:text-[2rem]">
+          NOSSA<br />
+          <span style={{ color: 'var(--cor-primaria)' }}>LOCALIZAÇÃO</span>
+        </h2>
+
+        <div className="flex flex-col gap-5">
+          {loc.endereco && (
+            <div className="flex gap-4 items-start">
+              <div className="w-[3px] self-stretch flex-shrink-0" style={{ backgroundColor: 'var(--cor-primaria)' }} />
+              <div>
+                <p className="text-white/40 text-xs uppercase tracking-[2px] mb-1">Endereço</p>
+                <p className="text-white text-[0.95rem] leading-relaxed">{loc.endereco}</p>
+              </div>
+            </div>
+          )}
+          {loc.horario && (
+            <div className="flex gap-4 items-start">
+              <div className="w-[3px] self-stretch flex-shrink-0" style={{ backgroundColor: 'var(--cor-primaria)' }} />
+              <div>
+                <p className="text-white/40 text-xs uppercase tracking-[2px] mb-1">Horário de Atendimento</p>
+                <p className="text-white text-[0.95rem] leading-relaxed">{loc.horario}</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
-      <div>
-        {loc.mapa && (
+
+      {/* Mapa */}
+      {loc.mapa && (
+        <div className="lg:w-[60%] min-h-[320px] lg:min-h-0">
           <iframe
             src={loc.mapa}
-            className="w-[50vw] h-[500px] border-none max-lg:w-[80vw] max-lg:h-[300px]"
+            className="w-full h-full min-h-[320px] border-none grayscale opacity-90"
             allowFullScreen
             title="Localização"
           />
-        )}
-      </div>
-    </div>
+        </div>
+      )}
+    </section>
   );
 }
