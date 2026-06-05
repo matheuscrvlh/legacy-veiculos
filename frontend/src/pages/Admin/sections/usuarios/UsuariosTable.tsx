@@ -8,22 +8,26 @@ interface Props {
   showErro: (t: string) => void;
 }
 
-const ic = 'border border-[#ccc] rounded-[3px] px-3 py-2 text-sm outline-none focus:border-[#535353]';
-const th = 'px-4 py-2 text-left text-xs font-bold text-[#535353] uppercase';
-const td = 'px-4 py-3 text-sm text-[#333] border-b border-[#f0f0f0]';
+const CORES_AVATAR = ['#3b82f6', '#10b981', '#8b5cf6', '#f59e0b', '#ef4444', '#06b6d4'];
+function corAvatar(nome: string): string {
+  return CORES_AVATAR[nome.charCodeAt(0) % CORES_AVATAR.length];
+}
 
 export default function UsuariosTable({ usuarios, onRefresh, showMsg, showErro }: Props) {
   const [editandoId, setEditandoId] = useState<number | null>(null);
   const [senhaEdicao, setSenhaEdicao] = useState('');
+  const [senhaErro, setSenhaErro] = useState('');
   const [confirmId, setConfirmId] = useState<number | null>(null);
 
   async function handleAtualizarSenha(id: number) {
-    if (!senhaEdicao.trim()) { showErro('Digite a nova senha.'); return; }
+    if (!senhaEdicao.trim()) { setSenhaErro('Campo obrigatório'); return; }
+    if (senhaEdicao.length < 4) { setSenhaErro('Mínimo 4 caracteres'); return; }
     try {
       await usuariosApi.atualizarSenha(id, senhaEdicao.trim());
       showMsg('Senha atualizada!');
       setEditandoId(null);
       setSenhaEdicao('');
+      setSenhaErro('');
     } catch { showErro('Erro ao atualizar senha.'); }
   }
 
@@ -39,56 +43,114 @@ export default function UsuariosTable({ usuarios, onRefresh, showMsg, showErro }
     } finally { setConfirmId(null); }
   }
 
+  if (usuarios.length === 0) {
+    return (
+      <div className="bg-white rounded-xl border border-[#e8e8e8] shadow-sm flex items-center justify-center py-12 text-center">
+        <p className="text-[#888] text-sm">Nenhum usuário cadastrado.</p>
+      </div>
+    );
+  }
+
   return (
     <>
+      {/* Modal de confirmação */}
       {confirmId !== null && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-[10px] p-8 max-w-[400px] w-[90%] text-center">
-            <p className="font-bold text-[1.1rem] mb-4">Remover usuário?</p>
-            <p className="text-sm text-[#535353] mb-6">Esta ação não pode ser desfeita.</p>
-            <div className="flex gap-3 justify-center">
-              <button onClick={() => setConfirmId(null)} className="px-5 py-2 border border-[#ccc] rounded cursor-pointer bg-white text-sm">Cancelar</button>
-              <button onClick={handleRemover} className="px-5 py-2 bg-red-500 text-white rounded cursor-pointer border-none text-sm">Remover</button>
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl p-6 max-w-[380px] w-full shadow-2xl text-center">
+            <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center mx-auto mb-4">
+              <svg className="w-5 h-5 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" />
+              </svg>
+            </div>
+            <p className="font-bold text-[#1a1a1a] mb-1">Remover usuário?</p>
+            <p className="text-sm text-[#888] mb-5">Esta ação não pode ser desfeita.</p>
+            <div className="flex gap-2">
+              <button onClick={() => setConfirmId(null)} className="flex-1 py-2 border border-[#e0e0e0] rounded-lg text-sm font-semibold text-[#555] hover:bg-[#f5f5f5] transition-colors cursor-pointer bg-white">Cancelar</button>
+              <button onClick={handleRemover} className="flex-1 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg text-sm font-semibold border-none cursor-pointer transition-colors">Remover</button>
             </div>
           </div>
         </div>
       )}
 
-      <div className="bg-white rounded-[10px] shadow-sm overflow-x-auto">
-        <table className="w-full">
-          <thead className="bg-[#f9f9f9]">
-            <tr>
-              <th className={th}>#</th>
-              <th className={th}>Usuário</th>
-              <th className={th}>Criado em</th>
-              <th className={th}>Ações</th>
-            </tr>
-          </thead>
-          <tbody>
-            {usuarios.map((u) => (
-              <tr key={u.id}>
-                <td className={td}>{u.id}</td>
-                <td className={td + ' font-bold'}>{u.usuario}</td>
-                <td className={td}>{new Date(u.created_at).toLocaleDateString('pt-BR')}</td>
-                <td className={td}>
-                  {editandoId === u.id ? (
-                    <div className="flex gap-2 items-center flex-wrap">
-                      <input type="password" className={ic + ' w-[140px]'} placeholder="Nova senha" value={senhaEdicao} onChange={(e) => setSenhaEdicao(e.target.value)} autoFocus />
-                      <button onClick={() => handleAtualizarSenha(u.id)} className="px-3 py-1 bg-green-500 text-white rounded text-xs border-none cursor-pointer">Salvar</button>
-                      <button onClick={() => { setEditandoId(null); setSenhaEdicao(''); }} className="px-3 py-1 bg-gray-100 text-[#535353] rounded text-xs border-none cursor-pointer">Cancelar</button>
-                    </div>
-                  ) : (
-                    <div className="flex gap-2">
-                      <button onClick={() => { setEditandoId(u.id); setSenhaEdicao(''); }} className="px-3 py-1 bg-blue-50 text-blue-600 rounded text-xs border-none cursor-pointer">Alterar senha</button>
-                      <button onClick={() => setConfirmId(u.id)} className="px-3 py-1 bg-red-50 text-red-600 rounded text-xs border-none cursor-pointer">Remover</button>
-                    </div>
+      <div className="bg-white rounded-xl border border-[#e8e8e8] shadow-sm overflow-hidden">
+        {/* Cabeçalho */}
+        <div className="px-5 py-3 border-b border-[#f0f0f0] bg-[#fafafa]">
+          <p className="text-sm font-bold text-[#222]">Usuários cadastrados</p>
+        </div>
+
+        <div className="divide-y divide-[#f5f5f5]">
+          {usuarios.map((u, i) => (
+            <div key={u.id} className="flex items-center gap-4 px-5 py-4 hover:bg-[#fafafa] transition-colors">
+
+              {/* Avatar */}
+              <div
+                className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 text-white text-sm font-bold"
+                style={{ backgroundColor: corAvatar(u.usuario) }}
+              >
+                {u.usuario.charAt(0).toUpperCase()}
+              </div>
+
+              {/* Info */}
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <p className="text-sm font-bold text-[#1a1a1a]">{u.usuario}</p>
+                  {i === 0 && (
+                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded-full bg-[#f0f0f0] text-[#888]">ADMIN</span>
                   )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        {usuarios.length === 0 && <p className="text-center py-8 text-[#535353]">Nenhum usuário cadastrado.</p>}
+                </div>
+                <p className="text-xs text-[#aaa]">
+                  #{u.id} · {new Date(u.created_at).toLocaleDateString('pt-BR')}
+                </p>
+              </div>
+
+              {/* Ações / edição inline */}
+              {editandoId === u.id ? (
+                <div className="flex items-start gap-2 flex-wrap">
+                  <div className="flex flex-col gap-1">
+                    <input
+                      type="password"
+                      placeholder="Nova senha"
+                      autoFocus
+                      value={senhaEdicao}
+                      onChange={(e) => { setSenhaEdicao(e.target.value); setSenhaErro(''); }}
+                      className={`border rounded-lg px-3 py-1.5 text-sm outline-none w-[160px] transition-colors ${
+                        senhaErro ? 'border-red-400 bg-red-50' : 'border-[#e0e0e0] focus:border-[#888]'
+                      }`}
+                    />
+                    {senhaErro && <p className="text-[10px] text-red-500">{senhaErro}</p>}
+                  </div>
+                  <button
+                    onClick={() => handleAtualizarSenha(u.id)}
+                    className="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-lg text-xs font-bold border-none cursor-pointer transition-colors self-start"
+                  >
+                    Salvar
+                  </button>
+                  <button
+                    onClick={() => { setEditandoId(null); setSenhaEdicao(''); setSenhaErro(''); }}
+                    className="px-3 py-1.5 bg-[#f0f0f0] hover:bg-[#e8e8e8] text-[#555] rounded-lg text-xs font-semibold border-none cursor-pointer transition-colors self-start"
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <button
+                    onClick={() => { setEditandoId(u.id); setSenhaEdicao(''); }}
+                    className="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg text-xs font-semibold border-none cursor-pointer transition-colors"
+                  >
+                    Alterar senha
+                  </button>
+                  <button
+                    onClick={() => setConfirmId(u.id)}
+                    className="px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-600 rounded-lg text-xs font-semibold border-none cursor-pointer transition-colors"
+                  >
+                    Remover
+                  </button>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
     </>
   );

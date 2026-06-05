@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { sobreApi } from '../../api/sobre';
 import { invalidateSobre } from '../../hooks/useSobre';
 import { SobreDados } from '../../types';
+import AdminLayout from '../../components/AdminLayout';
+import AdminToast from '../../components/AdminToast';
 import FormSobre from './sections/sobre/FormSobre';
 
 export default function AdminSobre() {
@@ -11,6 +13,7 @@ export default function AdminSobre() {
   const { isLoggedIn, loading } = useAuth();
   const [dados, setDados] = useState<SobreDados>({});
   const [msg, setMsg] = useState('');
+  const [erro, setErro] = useState('');
   const [enviando, setEnviando] = useState(false);
 
   useEffect(() => { if (!loading && !isLoggedIn) navigate('/login'); }, [isLoggedIn, loading]);
@@ -34,6 +37,7 @@ export default function AdminSobre() {
     e.preventDefault();
     setEnviando(true);
     setMsg('');
+    setErro('');
     const fd = new FormData(e.target as HTMLFormElement);
     fd.set('nomeEmpresa', dados.empresa?.nomeEmpresa || '');
     fd.set('sobreTexto1', dados.sobre?.texto1 || '');
@@ -60,23 +64,20 @@ export default function AdminSobre() {
     try {
       await sobreApi.salvar(fd);
       invalidateSobre();
-      setMsg('Configurações salvas com sucesso!');
-    } catch { setMsg('Erro ao salvar.'); }
-    finally { setEnviando(false); }
+      setMsg('Configurações salvas!');
+      setTimeout(() => setMsg(''), 3000);
+    } catch {
+      setErro('Erro ao salvar. Tente novamente.');
+      setTimeout(() => setErro(''), 3000);
+    } finally {
+      setEnviando(false);
+    }
   }
 
   return (
-    <div className="min-h-screen bg-[#f4f4f4]">
-      {msg && <div className="fixed top-5 right-5 bg-green-500 text-white px-5 py-3 rounded-[8px] z-50">{msg}</div>}
-
-      <div className="bg-[#232323] text-white flex justify-between items-center px-8 py-4">
-        <span className="text-lg font-bold">Configurações da Loja</span>
-        <Link to="/admin" className="text-white no-underline text-sm hover:text-[#00aaff]">← Painel</Link>
-      </div>
-
-      <div className="max-w-[900px] mx-auto py-8 px-5">
-        <FormSobre dados={dados} onSetField={setField} onSetDados={setDados} onSubmit={handleSalvar} enviando={enviando} />
-      </div>
-    </div>
+    <AdminLayout titulo="Configurações" maxWidth="900px">
+      <AdminToast msg={msg} erro={erro} />
+      <FormSobre dados={dados} onSetField={setField} onSetDados={setDados} onSubmit={handleSalvar} enviando={enviando} />
+    </AdminLayout>
   );
 }

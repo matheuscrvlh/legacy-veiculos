@@ -9,7 +9,7 @@ export default function LocalizacaoSection() {
   return (
     <section className="w-full bg-[#181818] flex flex-col lg:flex-row min-h-[480px]">
       {/* Info */}
-      <div className="lg:w-[40%] flex flex-col justify-center px-[8vw] py-16 max-lg:px-6 max-lg:py-10">
+      <div data-aos="fade-right" className="lg:w-[40%] flex flex-col justify-center px-[8vw] py-16 max-lg:px-6 max-lg:py-10">
         <p className="text-xs font-bold uppercase tracking-[5px] mb-4" style={{ color: 'var(--cor-primaria)' }}>
           ONDE ESTAMOS
         </p>
@@ -42,7 +42,7 @@ export default function LocalizacaoSection() {
 
       {/* Mapa */}
       {loc.mapa && (
-        <div className="lg:w-[60%] min-h-[320px] lg:min-h-0">
+        <div data-aos="fade-left" className="lg:w-[60%] min-h-[320px] lg:min-h-0">
           <iframe
             src={loc.mapa}
             className="w-full h-full min-h-[320px] border-none grayscale opacity-90"

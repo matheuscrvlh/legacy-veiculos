@@ -5,7 +5,11 @@
       "Bash(Select-Object FullName, PSIsContainer)",
       "Bash(Head -60)",
       "Bash(python3 -c \"import json,sys; data=json.load\\(sys.stdin\\); print\\(data[0]['text']\\)\")",
-      "Bash(npm install *)"
+      "Bash(npm install *)",
+      "Bash(xargs cat)",
+      "Bash(grep -E \"\\\\.\\(ts|js\\)$\")",
+      "Bash(xargs grep -l \"AOS\\\\|aos\")",
+      "Read(//c/Users/adm.matheus/Desktop/Matheus/Desarrollo/legacy-veiculos/frontend/src/components/HeroSlider/**)"
     ]
   }
 }

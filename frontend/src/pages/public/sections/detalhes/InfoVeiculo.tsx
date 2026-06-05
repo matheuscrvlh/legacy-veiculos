@@ -23,7 +23,7 @@ export default function InfoVeiculo({ veiculo, wppLink }: Props) {
       </div>
 
       <h1 className="text-[1.8rem] font-bold uppercase max-lg:text-[1.4rem]" style={{ color: 'var(--cor-primaria)' }}>{veiculo.Marca} {veiculo.Nome}</h1>
-      <p className="text-[#6b6b6b] text-base uppercase mb-2">{veiculo.Modelo} — {veiculo.Ano}</p>
+      <p className="text-[#6b6b6b] text-base uppercase mb-2">{veiculo.Modelo} · {veiculo.Ano}</p>
       <p className="text-[2rem] font-bold mb-4 max-lg:text-[1.5rem]" style={{ color: 'var(--cor-primaria)' }}>R$ {veiculo.Valor}</p>
 
       <div className="flex gap-[10px] mb-5 flex-wrap">
@@ -71,7 +71,7 @@ export default function InfoVeiculo({ veiculo, wppLink }: Props) {
 
       <a href={wppLink} target="_blank" rel="noreferrer">
         <button className="w-full py-4 text-white font-bold uppercase text-base border-none cursor-pointer rounded-[5px] transition-all duration-300 hover:scale-105" style={{ backgroundColor: 'var(--cor-botao)' }}>
-          TENHO INTERESSE — FALAR NO WHATSAPP
+          FALAR NO WHATSAPP
         </button>
       </a>
     </div>

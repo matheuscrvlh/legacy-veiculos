@@ -6,7 +6,7 @@ import { authMiddleware } from '../middlewares/auth';
 import { vehicleStorage, deleteFile, moveFile, getVehicleImagePath, getSoldVehicleImagePath } from '../utils/imageUtils';
 
 const router = Router();
-const upload = multer({ storage: vehicleStorage }).array('imagens', 10);
+const upload = multer({ storage: vehicleStorage, limits: { fileSize: 15 * 1024 * 1024 } }).array('imagens', 10);
 
 interface VeiculoRow {
   id: string; codigo_sequencial: number; nome: string; modelo: string;

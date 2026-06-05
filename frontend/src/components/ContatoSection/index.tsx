@@ -14,7 +14,7 @@ export default function ContatoSection() {
 
   return (
     <section className="w-full bg-white py-20 px-6">
-      <div className="max-w-[800px] mx-auto flex flex-col items-center text-center">
+      <div data-aos="fade-up" className="max-w-[800px] mx-auto flex flex-col items-center text-center">
 
         <p className="text-xs font-bold uppercase tracking-[6px] mb-5" style={{ color: 'var(--cor-primaria)' }}>
           FALE CONOSCO
@@ -26,7 +26,7 @@ export default function ContatoSection() {
         </h2>
 
         <p className="text-[#888] text-base max-w-[480px] leading-relaxed mb-12 max-lg:text-sm">
-          Tire suas dúvidas, agende uma visita ou negocie agora mesmo — nossa equipe responde na hora.
+          Tire suas dúvidas, agende uma visita ou negocie agora mesmo. Nossa equipe responde rápido.
         </p>
 
         {/* CTA WhatsApp */}

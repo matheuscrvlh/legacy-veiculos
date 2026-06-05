@@ -1,4 +1,6 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+import AOS from 'aos';
 import Home from './pages/public/Home';
 import Estoque from './pages/public/Estoque';
 import Consignado from './pages/public/Consignado';
@@ -12,10 +14,20 @@ import AdminVeiculos from './pages/admin/Veiculos';
 import AdminClientes from './pages/admin/Clientes';
 import AdminSobre from './pages/admin/Sobre';
 import AdminUsuarios from './pages/admin/Usuarios';
+import ProtectedRoute from './components/ProtectedRoute';
 
-export default function App() {
+function AnimatedRoutes() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Re-escaneia novos elementos com data-aos após a troca de rota
+    const t = setTimeout(() => AOS.refresh(), 80);
+    return () => clearTimeout(t);
+  }, [pathname]);
+
   return (
-    <BrowserRouter>
+    <div key={pathname} className="page-fade">
       <Routes>
         {/* Público */}
         <Route path="/" element={<Home />} />
@@ -26,14 +38,24 @@ export default function App() {
         <Route path="/veiculo/:id" element={<DetalhesVeiculo />} />
         <Route path="/detalhes-vendido/:id" element={<DetalhesVendido />} />
 
-        {/* Admin */}
+        {/* Login */}
         <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/admin/veiculos" element={<AdminVeiculos />} />
-        <Route path="/admin/clientes" element={<AdminClientes />} />
-        <Route path="/admin/sobre" element={<AdminSobre />} />
-        <Route path="/admin/usuarios" element={<AdminUsuarios />} />
+
+        {/* Admin — protegido */}
+        <Route path="/admin" element={<ProtectedRoute><Admin /></ProtectedRoute>} />
+        <Route path="/admin/veiculos" element={<ProtectedRoute><AdminVeiculos /></ProtectedRoute>} />
+        <Route path="/admin/clientes" element={<ProtectedRoute><AdminClientes /></ProtectedRoute>} />
+        <Route path="/admin/sobre" element={<ProtectedRoute><AdminSobre /></ProtectedRoute>} />
+        <Route path="/admin/usuarios" element={<ProtectedRoute><AdminUsuarios /></ProtectedRoute>} />
       </Routes>
+    </div>
+  );
+}
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <AnimatedRoutes />
     </BrowserRouter>
   );
 }

@@ -15,7 +15,7 @@ export default function InfoVendido({ veiculo }: Props) {
       </div>
 
       <h1 className="text-[1.8rem] font-bold uppercase max-lg:text-[1.4rem]" style={{ color: 'var(--cor-primaria)' }}>{veiculo.Marca} {veiculo.Nome}</h1>
-      <p className="text-[#6b6b6b] text-base uppercase mb-2">{veiculo.Modelo} — {veiculo.Ano}</p>
+      <p className="text-[#6b6b6b] text-base uppercase mb-2">{veiculo.Modelo} · {veiculo.Ano}</p>
       <p className="text-[2rem] font-bold mb-4" style={{ color: 'var(--cor-primaria)' }}>R$ {veiculo.Valor}</p>
 
       <div className="flex gap-[10px] mb-5 flex-wrap">

@@ -20,6 +20,7 @@ export default function Estoque() {
   const [filtrados, setFiltrados] = useState<Veiculo[]>([]);
   const [filtros, setFiltros] = useState<Filtros>(filtrosIniciais);
   const [filtrosAberto, setFiltrosAberto] = useState(false);
+  const [carregando, setCarregando] = useState(true);
 
   const marcas = [...new Set(todos.map((v) => v.Marca))];
   const categorias = [...new Set(todos.map((v) => v.Categoria))];
@@ -29,8 +30,10 @@ export default function Estoque() {
   const portasOpts = [...new Set(todos.map((v) => String(v.Portas)))];
 
   useEffect(() => {
-    veiculosApi.listar().then(setTodos).catch(() => setTodos([]));
-    vendidosApi.listar().then(setVendidos).catch(() => setVendidos([]));
+    Promise.all([veiculosApi.listar(), vendidosApi.listar()])
+      .then(([v, vd]) => { setTodos(v); setVendidos(vd); })
+      .catch(() => { setTodos([]); setVendidos([]); })
+      .finally(() => setCarregando(false));
   }, []);
 
   useEffect(() => {
@@ -72,7 +75,7 @@ export default function Estoque() {
           aberto={filtrosAberto} onFechar={() => setFiltrosAberto(false)}
         />
         <CatalogGrid
-          veiculos={filtrados} ordem={filtros.ordem}
+          veiculos={filtrados} carregando={carregando} ordem={filtros.ordem}
           onOrdem={(o) => setFiltros((f) => ({ ...f, ordem: o }))}
           onAbrirFiltros={() => setFiltrosAberto(true)}
           onLimpar={() => setFiltros(filtrosIniciais)}
