@@ -23,7 +23,7 @@ export default function SobreLoja() {
         <div className="w-full max-w-[1200px] px-5 py-[30px]">
           {dados.empresa?.nomeEmpresa && (
             <div className="mb-6">
-              <p className="text-[2rem] font-bold uppercase text-[#333]">{dados.empresa.nomeEmpresa}</p>
+              <p className="text-[2rem] font-bold uppercase text-[#333] max-lg:text-[1.3rem]">{dados.empresa.nomeEmpresa}</p>
             </div>
           )}
 
@@ -59,8 +59,9 @@ export default function SobreLoja() {
         </div>
 
         <InstagramPanel />
-        <ContatoSection />
+        <div className="h-[60px]" />
         <LocalizacaoSection />
+        <ContatoSection />
       </main>
 
       <Footer />

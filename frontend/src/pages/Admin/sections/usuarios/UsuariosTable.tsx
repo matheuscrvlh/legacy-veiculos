@@ -80,7 +80,7 @@ export default function UsuariosTable({ usuarios, onRefresh, showMsg, showErro }
 
         <div className="divide-y divide-[#f5f5f5]">
           {usuarios.map((u, i) => (
-            <div key={u.id} className="flex items-center gap-4 px-5 py-4 hover:bg-[#fafafa] transition-colors">
+            <div key={u.id} className="flex items-center gap-4 px-5 py-4 hover:bg-[#fafafa] transition-colors max-sm:flex-wrap max-sm:gap-2 max-sm:px-4 max-sm:py-3">
 
               {/* Avatar */}
               <div
@@ -105,15 +105,15 @@ export default function UsuariosTable({ usuarios, onRefresh, showMsg, showErro }
 
               {/* Ações / edição inline */}
               {editandoId === u.id ? (
-                <div className="flex items-start gap-2 flex-wrap">
-                  <div className="flex flex-col gap-1">
+                <div className="flex items-start gap-2 flex-wrap max-sm:w-full">
+                  <div className="flex flex-col gap-1 max-sm:flex-1">
                     <input
                       type="password"
                       placeholder="Nova senha"
                       autoFocus
                       value={senhaEdicao}
                       onChange={(e) => { setSenhaEdicao(e.target.value); setSenhaErro(''); }}
-                      className={`border rounded-lg px-3 py-1.5 text-sm outline-none w-[160px] transition-colors ${
+                      className={`border rounded-lg px-3 py-1.5 text-sm outline-none w-[160px] max-sm:w-full transition-colors ${
                         senhaErro ? 'border-red-400 bg-red-50' : 'border-[#e0e0e0] focus:border-[#888]'
                       }`}
                     />
@@ -133,7 +133,7 @@ export default function UsuariosTable({ usuarios, onRefresh, showMsg, showErro }
                   </button>
                 </div>
               ) : (
-                <div className="flex items-center gap-2 flex-shrink-0">
+                <div className="flex items-center gap-2 flex-shrink-0 max-sm:w-full max-sm:justify-end">
                   <button
                     onClick={() => { setEditandoId(u.id); setSenhaEdicao(''); }}
                     className="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg text-xs font-semibold border-none cursor-pointer transition-colors"

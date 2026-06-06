@@ -34,7 +34,7 @@ export default function DetalhesVeiculo() {
         <div className="max-w-[1200px] mx-auto px-5 py-[30px]">
           <button onClick={() => navigate(-1)} className="mb-5 text-[#535353] hover:text-primaria font-bold cursor-pointer border-none bg-transparent text-base">← Voltar</button>
           <div className="flex gap-[40px] max-lg:flex-col">
-            <GaleriaVeiculo imagens={veiculo.Imagens} nome={veiculo.Nome} folder="vehicles" imgAtiva={imgAtiva} onSelect={setImgAtiva} />
+            <GaleriaVeiculo imagens={veiculo.Imagens} nome={veiculo.Nome} folder="vehicles" imgAtiva={imgAtiva} onSelect={setImgAtiva} oferta={veiculo.Oferta} />
             <InfoVeiculo veiculo={veiculo} wppLink={wppLink} />
           </div>
         </div>

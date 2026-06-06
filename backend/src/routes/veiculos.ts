@@ -91,6 +91,39 @@ router.post('/oferta/:id', authMiddleware, (req: Request, res: Response) => {
   res.json({ Oferta: novo === 1 });
 });
 
+router.put('/editar/:id', authMiddleware, (req: Request, res: Response) => {
+  upload(req, res, (err) => {
+    if (err) { res.status(500).json({ message: 'Erro no upload.' }); return; }
+
+    const row = q<VeiculoRow>('SELECT * FROM veiculos WHERE id = ?').get(req.params.id);
+    if (!row) { res.status(404).json({ message: 'Veículo não encontrado.' }); return; }
+
+    const imagensExistentes: string[] = JSON.parse(req.body.imagensExistentes || '[]');
+    const imagensAtuais: string[] = JSON.parse(row.imagens || '[]');
+
+    imagensAtuais
+      .filter((img) => !imagensExistentes.includes(img))
+      .forEach((img) => deleteFile(getVehicleImagePath(img)));
+
+    const novasImagens = (req.files as Express.Multer.File[]).map((f) => f.filename);
+    const imagensFinais = JSON.stringify([...imagensExistentes, ...novasImagens]);
+
+    q(`UPDATE veiculos SET nome=@nome, modelo=@modelo, marca=@marca, categoria=@categoria, combustivel=@combustivel, cambio=@cambio, cor=@cor, portas=@portas, km=@km, sobre=@sobre, opcionais=@opcionais, ano=@ano, valor=@valor, tipo_veiculo=@tipo_veiculo, imagens=@imagens WHERE id=@id`).run({
+      id: req.params.id,
+      nome: req.body.nome || '', modelo: req.body.modelo || '',
+      marca: req.body.marca || '', categoria: req.body.categoria || '',
+      combustivel: req.body.combustivel || '', cambio: req.body.cambio || '',
+      cor: req.body.cor || '', portas: parseInt(req.body.portas) || 0,
+      km: parseInt(req.body.km) || 0, sobre: req.body.sobre || '',
+      opcionais: req.body.opcionais || '', ano: parseInt(req.body.ano) || 0,
+      valor: req.body.valor || '', tipo_veiculo: req.body.tipoVeiculo || '',
+      imagens: imagensFinais,
+    });
+
+    res.json({ message: 'Veículo atualizado com sucesso!' });
+  });
+});
+
 router.post('/marcar-vendido/:id', authMiddleware, (req: Request, res: Response) => {
   const row = q<VeiculoRow>('SELECT * FROM veiculos WHERE id = ?').get(req.params.id);
   if (!row) { res.status(404).json({ message: 'Veículo não encontrado.' }); return; }

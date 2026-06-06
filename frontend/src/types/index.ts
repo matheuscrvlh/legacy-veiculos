@@ -86,6 +86,7 @@ export interface SobreDados {
   };
   localizacao?: { endereco: string; horario: string; mapa: string };
   rodape?: string;
+  fraseTopbar?: string;
 }
 
 export interface FiltrosVeiculo {

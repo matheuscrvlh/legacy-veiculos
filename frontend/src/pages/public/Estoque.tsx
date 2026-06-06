@@ -66,7 +66,7 @@ export default function Estoque() {
     <div className="min-h-screen flex flex-col">
       <Header />
       <HeroSlider imagens={imagens} />
-      <main className="flex justify-center w-[80vw] mx-auto my-[30px] gap-[30px] max-[1200px]:flex-col max-[1200px]:w-full max-[1200px]:mx-0">
+      <main className="flex justify-center w-[80vw] mx-auto my-[30px] gap-[30px] max-[1200px]:flex-col max-[1200px]:w-full max-[1200px]:mx-0 max-[1200px]:px-4">
         <WhatsAppButton />
         <FiltrosSidebar
           filtros={filtros} onChange={setFiltros}

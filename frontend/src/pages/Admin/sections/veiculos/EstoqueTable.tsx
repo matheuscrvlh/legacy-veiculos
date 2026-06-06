@@ -13,9 +13,10 @@ interface Props {
   onToggleOferta: (id: string) => void;
   onVender: (id: string) => void;
   onRemover: (id: string) => void;
+  onEditar: (v: Veiculo) => void;
 }
 
-export default function EstoqueTable({ veiculos, onToggleOferta, onVender, onRemover }: Props) {
+export default function EstoqueTable({ veiculos, onToggleOferta, onVender, onRemover, onEditar }: Props) {
   const navigate = useNavigate();
   const [busca, setBusca] = useState('');
 
@@ -82,7 +83,7 @@ export default function EstoqueTable({ veiculos, onToggleOferta, onVender, onRem
               <div className="relative w-full aspect-[4/3] bg-[#1a1a1a] overflow-hidden">
                 <img
                   src={v.Imagens[0] ? `/uploads/vehicles/${v.Imagens[0]}` : '/icons/veiculos/semimagem.png'}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-bottom"
                   alt={v.Nome}
                   onError={(e) => { (e.target as HTMLImageElement).src = '/icons/veiculos/semimagem.png'; }}
                 />
@@ -142,6 +143,18 @@ export default function EstoqueTable({ veiculos, onToggleOferta, onVender, onRem
                   className="w-10 py-2.5 flex items-center justify-center bg-white hover:bg-blue-50 border-none cursor-pointer transition-colors"
                 >
                   <img src={iconLupa} className="w-[15px] h-[15px]" alt="" />
+                </button>
+
+                <div className="w-px bg-[#f0f0f0]" />
+
+                <button
+                  onClick={() => onEditar(v)}
+                  title="Editar veículo"
+                  className="w-10 py-2.5 flex items-center justify-center bg-white hover:bg-indigo-50 border-none cursor-pointer transition-colors"
+                >
+                  <svg className="w-[15px] h-[15px] text-[#999] hover:text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125" />
+                  </svg>
                 </button>
 
                 <div className="w-px bg-[#f0f0f0]" />

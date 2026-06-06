@@ -48,7 +48,7 @@ export default function NovoUsuarioForm({ onSuccess, showMsg, showErro }: Props)
     <div className="bg-white rounded-xl shadow-sm border border-[#ebebeb] p-6">
       <h2 className="text-sm font-bold text-[#222] uppercase tracking-wide mb-4">Novo Usuário</h2>
       <form onSubmit={handleCriar} className="flex gap-4 flex-wrap items-end">
-        <div className="flex flex-col gap-1 min-w-[180px] flex-1">
+        <div className="flex flex-col gap-1 min-w-[180px] max-sm:min-w-0 flex-1">
           <label className="text-[0.68rem] font-bold text-[#666] uppercase tracking-wide">
             Usuário<span className="text-red-400 ml-0.5">*</span>
           </label>
@@ -61,7 +61,7 @@ export default function NovoUsuarioForm({ onSuccess, showMsg, showErro }: Props)
           {erroUsuario && <p className="text-xs text-red-500">{erroUsuario}</p>}
         </div>
 
-        <div className="flex flex-col gap-1 min-w-[180px] flex-1">
+        <div className="flex flex-col gap-1 min-w-[180px] max-sm:min-w-0 flex-1">
           <label className="text-[0.68rem] font-bold text-[#666] uppercase tracking-wide">
             Senha<span className="text-red-400 ml-0.5">*</span>
           </label>

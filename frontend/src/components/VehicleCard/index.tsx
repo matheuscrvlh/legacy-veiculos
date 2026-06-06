@@ -23,21 +23,22 @@ export default function VehicleCard({ veiculo, isVendido = false, detailPath }: 
   return (
     <div
       data-aos="fade-up"
-      className="bg-white shadow-[0px_0px_8px_rgba(0,0,0,0.12)] transition-all duration-300 hover:-translate-y-[4px] hover:shadow-[0_10px_24px_rgba(0,0,0,0.16)] flex flex-col cursor-pointer w-[300px] rounded-[10px] overflow-hidden"
+      className="group relative bg-white shadow-[0px_0px_6px_rgba(0,0,0,0.08)] transition-all duration-[650ms] delay-[40ms] hover:-translate-y-[3px] hover:shadow-[0_8px_22px_rgba(0,0,0,0.11)] flex flex-col cursor-pointer w-[300px] rounded-[10px]"
       onClick={() => navigate(path)}
     >
-      {/* Imagem — proporção 3:4 (retrato de celular) */}
-      <div className="relative w-full aspect-square bg-[#1a1a1a] overflow-hidden">
+      {/* Ícone oferta — fora do container da imagem para poder ultrapassar a borda */}
+      {veiculo.Oferta && !isVendido && (
+        <img src={iconSeloOferta} alt="Oferta" className="absolute top-[-5px] left-[3px] w-[90px] z-20 drop-shadow-md pointer-events-none" />
+      )}
+
+      {/* Imagem */}
+      <div className="relative w-full aspect-square bg-[#1a1a1a] overflow-hidden rounded-t-[10px]">
         <img
           src={imageSrc}
           alt={veiculo.Nome}
-          className={`w-full h-full object-cover object-bottom ${isVendido ? 'opacity-60' : ''}`}
+          className={`w-full h-full object-cover object-bottom transition-transform duration-500 group-hover:scale-105 ${isVendido ? 'opacity-60' : ''}`}
           onError={(e) => { (e.target as HTMLImageElement).src = '/icons/veiculos/semimagem.png'; }}
         />
-
-        {veiculo.Oferta && !isVendido && (
-          <img src={iconSeloOferta} alt="Oferta" className="absolute top-[-2px] left-0 w-[90px] z-10 drop-shadow-md" />
-        )}
 
         {isVendido && (
           <div className="absolute inset-0 flex items-center justify-center">

@@ -108,10 +108,14 @@ db.exec(`
   );
 `);
 
-const adminExiste = db.prepare('SELECT id FROM usuarios WHERE usuario = ?').get('vinicius') as { id: number } | undefined;
-if (!adminExiste) {
-  const hash = bcrypt.hashSync('062025', 10);
-  db.prepare('INSERT INTO usuarios (usuario, senha) VALUES (?, ?)').run('vinicius', hash);
+const adminUser = process.env.ADMIN_USER;
+const adminPass = process.env.ADMIN_PASSWORD;
+if (adminUser && adminPass) {
+  const adminExiste = db.prepare('SELECT id FROM usuarios WHERE usuario = ?').get(adminUser) as { id: number } | undefined;
+  if (!adminExiste) {
+    const hash = bcrypt.hashSync(adminPass, 10);
+    db.prepare('INSERT INTO usuarios (usuario, senha) VALUES (?, ?)').run(adminUser, hash);
+  }
 }
 
 const codigoExiste = db.prepare('SELECT id FROM codigo_sequencial WHERE id = 1').get() as { id: number } | undefined;

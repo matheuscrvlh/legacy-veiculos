@@ -13,7 +13,7 @@ export default function LocalizacaoSection() {
         <p className="text-xs font-bold uppercase tracking-[5px] mb-4" style={{ color: 'var(--cor-primaria)' }}>
           ONDE ESTAMOS
         </p>
-        <h2 className="text-[2.8rem] font-black uppercase text-white leading-tight mb-8 max-lg:text-[2rem]">
+        <h2 className="text-[2.8rem] font-black uppercase text-white leading-tight mb-8 max-lg:text-[1.5rem]">
           NOSSA<br />
           <span style={{ color: 'var(--cor-primaria)' }}>LOCALIZAÇÃO</span>
         </h2>

@@ -64,12 +64,12 @@ export default function AdminClientes() {
       )}
 
       {/* Tabs */}
-      <div className="flex gap-1 bg-[#e8e8ea] p-1 rounded-xl w-fit mb-6">
+      <div className="flex gap-1 bg-[#e8e8ea] p-1 rounded-xl mb-6 overflow-x-auto max-sm:w-full">
         {ABAS.map((a) => (
           <button
             key={a.key}
             onClick={() => setAba(a.key)}
-            className={`px-4 py-1.5 rounded-lg text-sm font-semibold border-none cursor-pointer transition-all duration-150 ${
+            className={`px-4 py-1.5 rounded-lg text-sm font-semibold border-none cursor-pointer transition-all duration-150 whitespace-nowrap flex-shrink-0 max-sm:flex-1 max-sm:text-xs max-sm:px-2 ${
               aba === a.key ? 'bg-white shadow-sm text-[#1a1a1a]' : 'bg-transparent text-[#888] hover:text-[#444]'
             }`}
           >

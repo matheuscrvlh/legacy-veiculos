@@ -57,6 +57,7 @@ export default function AdminSobre() {
     fd.set('horario', dados.localizacao?.horario || '');
     fd.set('mapa', dados.localizacao?.mapa || '');
     fd.set('rodape', dados.rodape || '');
+    fd.set('fraseTopbar', dados.fraseTopbar || '');
     fd.set('idInstagramLoja', dados.instagramLoja?.id || '');
     fd.set('nomeInstagramLoja', dados.instagramLoja?.nome || '');
     fd.set('seguidoresInstagramLoja', dados.instagramLoja?.seguidores || '');

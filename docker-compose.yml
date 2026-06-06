@@ -1,20 +1,26 @@
+name: legacy
+
 services:
   backend:
     build: ./backend
     container_name: legacy-backend
     restart: unless-stopped
+    ports:
+      - "3001:3000"
     environment:
-      PORT: 3001
+      PORT: 3000
       NODE_ENV: production
       JWT_SECRET: ${JWT_SECRET:-legacy_veiculos_secret_key_2025}
       CORS_ORIGIN: ${CORS_ORIGIN:-*}
+      ADMIN_USER: ${ADMIN_USER}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
     volumes:
       - backend-data:/app/data
       - backend-uploads:/app/uploads
     networks:
       - app-network
     healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:3001/api/veiculos"]
+      test: ["CMD", "wget", "-qO-", "http://localhost:3000/api/veiculos"]
       interval: 30s
       timeout: 10s
       retries: 3
@@ -24,7 +30,7 @@ services:
     container_name: legacy-frontend
     restart: unless-stopped
     ports:
-      - "${PORT:-80}:80"
+      - "8081:80"
     depends_on:
       backend:
         condition: service_healthy
@@ -33,7 +39,9 @@ services:
 
 volumes:
   backend-data:
+    name: backend-data
   backend-uploads:
+    name: backend-uploads
 
 networks:
   app-network:

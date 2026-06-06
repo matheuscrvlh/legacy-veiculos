@@ -376,13 +376,35 @@ export default function FormSobre({ dados, onSetField, onSetDados, onSubmit, env
         </div>
       </Card>
 
+      {/* Frase Topbar */}
+      <Card title="Frase do Topo" description="Aparece em destaque acima do header em todas as páginas. Deixe em branco para ocultar.">
+        <div>
+          <input
+            className={ic}
+            placeholder="Ex: Financiamento facilitado! Fale conosco agora."
+            value={dados.fraseTopbar || ''}
+            maxLength={80}
+            onChange={(e) => onSetDados((d) => ({ ...d, fraseTopbar: e.target.value }))}
+          />
+          <p className={`text-xs text-right mt-1 ${(dados.fraseTopbar || '').length >= 70 ? 'text-red-400 font-semibold' : 'text-[#aaa]'}`}>
+            {(dados.fraseTopbar || '').length}/80
+          </p>
+        </div>
+      </Card>
+
       {/* Rodapé */}
-      <Card title="Rodapé">
-        <textarea
-          className={`${ic} h-[80px] resize-none`}
-          value={dados.rodape || ''}
-          onChange={(e) => onSetDados((d) => ({ ...d, rodape: e.target.value }))}
-        />
+      <Card title="Rodapé" description="Texto exibido no rodapé do site. Máximo 100 caracteres.">
+        <div>
+          <textarea
+            className={`${ic} h-[80px] resize-none`}
+            value={dados.rodape || ''}
+            maxLength={100}
+            onChange={(e) => onSetDados((d) => ({ ...d, rodape: e.target.value }))}
+          />
+          <p className={`text-xs text-right mt-1 ${(dados.rodape || '').length >= 90 ? 'text-red-400 font-semibold' : 'text-[#aaa]'}`}>
+            {(dados.rodape || '').length}/100
+          </p>
+        </div>
       </Card>
 
       <button

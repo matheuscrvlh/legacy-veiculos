@@ -16,4 +16,9 @@ export const veiculosApi = {
   toggleOferta: (id: string) => api.post(`/veiculos/oferta/${id}`).then((r) => r.data),
 
   marcarVendido: (id: string) => api.post(`/veiculos/marcar-vendido/${id}`).then((r) => r.data),
+
+  editar: (id: string, formData: FormData) =>
+    api.put(`/veiculos/editar/${id}`, formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    }).then((r) => r.data),
 };

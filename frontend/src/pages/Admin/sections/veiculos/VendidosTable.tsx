@@ -75,7 +75,7 @@ export default function VendidosTable({ vendidos, onReativar, onRemover }: Props
               <div className="relative w-full aspect-[4/3] bg-[#1a1a1a] overflow-hidden">
                 <img
                   src={v.Imagens[0] ? `/uploads/vehiclesSold/${v.Imagens[0]}` : '/icons/veiculos/semimagem.png'}
-                  className="w-full h-full object-cover opacity-50 grayscale"
+                  className="w-full h-full object-cover object-bottom opacity-50 grayscale"
                   alt={v.Nome}
                   onError={(e) => { (e.target as HTMLImageElement).src = '/icons/veiculos/semimagem.png'; }}
                 />

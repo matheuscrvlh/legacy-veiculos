@@ -20,6 +20,35 @@ type FormErrors = Partial<Record<keyof FormData | 'imagens', string>>;
 
 const ANO_ATUAL = new Date().getFullYear();
 
+function applyKmMask(raw: string): string {
+  const digits = raw.replace(/\D/g, '');
+  if (!digits) return '';
+  return parseInt(digits, 10).toLocaleString('pt-BR');
+}
+
+function applyValorMask(raw: string): string {
+  const cleaned = raw.replace(/[^\d,.]/g, '');
+  if (!cleaned) return '';
+  const hasComma = cleaned.includes(',');
+  if (hasComma) {
+    const [intPart, decPart = ''] = cleaned.split(',');
+    const digits = intPart.replace(/\D/g, '');
+    const int = digits ? parseInt(digits, 10).toLocaleString('pt-BR') : '0';
+    return `${int},${decPart.slice(0, 2)}`;
+  }
+  const digits = cleaned.replace(/\D/g, '');
+  if (!digits) return '';
+  return parseInt(digits, 10).toLocaleString('pt-BR');
+}
+
+function formatValorBlur(raw: string): string {
+  if (!raw) return '';
+  const normalized = raw.replace(/\./g, '').replace(',', '.');
+  const n = parseFloat(normalized);
+  if (isNaN(n)) return raw;
+  return n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
 const formInicial: FormData = {
   nome: '', marca: '', categoria: '', cambio: '', cor: '', portas: '', km: '', ano: '', combustivel: '',
   valorFipe: '', valorDesejado: '', placa: '', cidade: '', bairro: '', observacao: '',
@@ -39,7 +68,7 @@ function validar(form: FormData, imagens: File[]): FormErrors {
   if (!form.marca.trim()) e.marca = 'Campo obrigatório';
   if (form.ano && (Number(form.ano) < 1960 || Number(form.ano) > ANO_ATUAL + 1))
     e.ano = `Informe entre 1960 e ${ANO_ATUAL + 1}`;
-  if (form.km && Number(form.km) < 0) e.km = 'KM não pode ser negativo';
+  if (form.km && parseInt(form.km.replace(/\./g, ''), 10) < 0) e.km = 'KM não pode ser negativo';
   if (form.placa && !/^[A-Za-z]{3}[0-9][A-Za-z0-9][0-9]{2}$/i.test(form.placa.replace(/[-\s]/g, '')))
     e.placa = 'Placa inválida (ex: ABC1234 ou ABC1D23)';
   if (!form.nomeCliente.trim()) e.nomeCliente = 'Campo obrigatório';
@@ -114,7 +143,8 @@ export default function FormConsignado({ whatsappLink }: Props) {
       const fd = new FormData();
       Object.entries(form).forEach(([k, v]) => {
         if (['ddi', 'ddd', 'telefone'].includes(k)) return;
-        fd.append(k, v);
+        if (k === 'km') fd.append(k, v.replace(/\./g, ''));
+        else fd.append(k, v);
       });
       fd.append('telefoneCliente', `+${form.ddi}${form.ddd}${form.telefone}`);
       imagens.forEach((img) => fd.append('imagens', img));
@@ -263,12 +293,12 @@ export default function FormConsignado({ whatsappLink }: Props) {
 
             <Field id="field-km" label="Quilometragem (KM)" error={errors.km}>
               <input
-                type="number"
-                placeholder="Ex: 45000"
-                min={0}
+                type="text"
+                inputMode="numeric"
+                placeholder="Ex: 45.000"
                 className={inp(!!errors.km)}
                 value={form.km}
-                onChange={(e) => set('km', e.target.value)}
+                onChange={(e) => set('km', applyKmMask(e.target.value))}
               />
             </Field>
 
@@ -284,11 +314,29 @@ export default function FormConsignado({ whatsappLink }: Props) {
             </Field>
 
             <Field label="Valor FIPE (R$)" error={errors.valorFipe}>
-              <input type="text" placeholder="Ex: 45.000" className={inp(!!errors.valorFipe)} value={form.valorFipe} onChange={(e) => set('valorFipe', e.target.value)} />
+              <div className={`flex items-center border rounded-lg overflow-hidden transition-colors ${errors.valorFipe ? 'border-red-400 bg-red-50' : 'border-[#ddd] bg-white focus-within:border-[#888]'}`}>
+                <span className={`px-3 text-sm font-semibold select-none ${errors.valorFipe ? 'text-red-400' : 'text-[#aaa]'}`}>R$</span>
+                <input
+                  type="text" inputMode="decimal" placeholder="0,00"
+                  className="flex-1 py-2.5 pr-3 text-sm outline-none bg-transparent"
+                  value={form.valorFipe}
+                  onChange={(e) => set('valorFipe', applyValorMask(e.target.value))}
+                  onBlur={() => set('valorFipe', formatValorBlur(form.valorFipe))}
+                />
+              </div>
             </Field>
 
             <Field label="Valor Desejado (R$)" error={errors.valorDesejado}>
-              <input type="text" placeholder="Ex: 43.000" className={inp(!!errors.valorDesejado)} value={form.valorDesejado} onChange={(e) => set('valorDesejado', e.target.value)} />
+              <div className={`flex items-center border rounded-lg overflow-hidden transition-colors ${errors.valorDesejado ? 'border-red-400 bg-red-50' : 'border-[#ddd] bg-white focus-within:border-[#888]'}`}>
+                <span className={`px-3 text-sm font-semibold select-none ${errors.valorDesejado ? 'text-red-400' : 'text-[#aaa]'}`}>R$</span>
+                <input
+                  type="text" inputMode="decimal" placeholder="0,00"
+                  className="flex-1 py-2.5 pr-3 text-sm outline-none bg-transparent"
+                  value={form.valorDesejado}
+                  onChange={(e) => set('valorDesejado', applyValorMask(e.target.value))}
+                  onBlur={() => set('valorDesejado', formatValorBlur(form.valorDesejado))}
+                />
+              </div>
             </Field>
 
             <Field label="Cidade" error={errors.cidade}>

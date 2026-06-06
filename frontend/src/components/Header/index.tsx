@@ -3,8 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSobre } from '../../hooks/useSobre';
 import { FaWhatsapp, FaInstagram } from 'react-icons/fa';
 import { HiMenu, HiX } from 'react-icons/hi';
-import iconMenu from '../../assets/icons/public/filtros/menuicon.png';
-import iconMenuX from '../../assets/icons/public/filtros/menu-x-icon.png';
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -31,20 +29,29 @@ export default function Header() {
   return (
     <header className="w-full sticky top-0 z-50">
       {/* Topbar */}
-      {dados.whatsapp?.numero && (
-        <div className="hidden lg:flex items-center justify-end gap-6 px-[7vw] py-[6px] text-[0.72rem] font-medium text-[#232323]/70" style={{ backgroundColor: 'var(--cor-primaria)' }}>
-          <span className="tracking-wide">📞 {dados.whatsapp.numero}</span>
-          <div className="flex items-center gap-3">
-            {dados.whatsapp?.link && (
-              <a href={dados.whatsapp.link} target="_blank" rel="noreferrer" className="text-[#232323]/60 hover:text-[#232323] transition-colors">
-                <FaWhatsapp size={15} />
-              </a>
+      {(dados.whatsapp?.numero || dados.fraseTopbar) && (
+        <div className="hidden lg:flex items-center relative px-[7vw] py-[6px] text-[0.72rem] font-medium text-[#232323]/70" style={{ backgroundColor: 'var(--cor-primaria)' }}>
+          {dados.fraseTopbar && (
+            <span className="absolute left-1/2 -translate-x-1/2 font-semibold tracking-wide pointer-events-none">
+              {dados.fraseTopbar}
+            </span>
+          )}
+          <div className="ml-auto flex items-center gap-6">
+            {dados.whatsapp?.numero && (
+              <span className="tracking-wide">📞 {dados.whatsapp.numero}</span>
             )}
-            {dados.instagram?.link && (
-              <a href={dados.instagram.link} target="_blank" rel="noreferrer" className="text-[#232323]/60 hover:text-[#232323] transition-colors">
-                <FaInstagram size={15} />
-              </a>
-            )}
+            <div className="flex items-center gap-3">
+              {dados.whatsapp?.link && (
+                <a href={dados.whatsapp.link} target="_blank" rel="noreferrer" className="text-[#232323]/60 hover:text-[#232323] transition-colors">
+                  <FaWhatsapp size={15} />
+                </a>
+              )}
+              {dados.instagram?.link && (
+                <a href={dados.instagram.link} target="_blank" rel="noreferrer" className="text-[#232323]/60 hover:text-[#232323] transition-colors">
+                  <FaInstagram size={15} />
+                </a>
+              )}
+            </div>
           </div>
         </div>
       )}
@@ -61,7 +68,7 @@ export default function Header() {
         </Link>
 
         {/* Nav desktop */}
-        <nav className="hidden lg:flex items-center gap-[36px]">
+        <nav className="hidden lg:flex items-center gap-[36px] absolute left-1/2 -translate-x-1/2">
           {navLinks.map((link) => {
             const active = location.pathname === link.href;
             return (

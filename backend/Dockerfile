@@ -20,5 +20,5 @@ COPY --from=builder /app/dist ./dist
 RUN mkdir -p data uploads/vehicles uploads/vehiclesSold uploads/logos uploads/icons \
     uploads/bannersAbout uploads/bannersMain uploads/bannersInstagram uploads/clientes
 
-EXPOSE 3001
+EXPOSE 3000
 CMD ["node", "dist/server.js"]

@@ -75,6 +75,7 @@ router.post('/salvar', authMiddleware, (req: Request, res: Response) => {
 
     dados.localizacao = { endereco: body.endereco || '', horario: body.horario || '', mapa: body.mapa || '' };
     dados.rodape = body.rodape || '';
+    dados.fraseTopbar = body.fraseTopbar || '';
 
     // Deletar imagens antigas substituídas
     const imgAntigos = dadosAntigos.imagens as Record<string, string> | undefined;

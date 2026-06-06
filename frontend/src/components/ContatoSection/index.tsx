@@ -20,7 +20,7 @@ export default function ContatoSection() {
           FALE CONOSCO
         </p>
 
-        <h2 className="text-[3rem] font-black uppercase text-[#181818] leading-tight mb-4 max-lg:text-[2.1rem]">
+        <h2 className="text-[3rem] font-black uppercase text-[#181818] leading-tight mb-4 max-lg:text-[1.5rem]">
           SEU PRÓXIMO CARRO<br />
           <span style={{ color: 'var(--cor-primaria)' }}>ESTÁ AQUI.</span>
         </h2>
@@ -32,11 +32,11 @@ export default function ContatoSection() {
         {/* CTA WhatsApp */}
         {wpp?.link && (
           <a href={wpp.link} target="_blank" rel="noreferrer" className="no-underline mb-10 w-full max-w-[400px]">
-            <div className="bg-[#25D366] flex items-center justify-center gap-4 py-5 px-8 transition-all duration-300 hover:brightness-105 hover:scale-[1.02] cursor-pointer shadow-[0_8px_30px_rgba(37,211,102,0.25)]">
-              <FaWhatsapp size={28} color="white" />
+            <div className="bg-[#25D366] flex items-center justify-center gap-4 py-5 px-8 transition-all duration-300 hover:brightness-105 hover:scale-[1.02] cursor-pointer shadow-[0_8px_30px_rgba(37,211,102,0.25)] max-lg:py-3 max-lg:px-4 max-lg:gap-3">
+              <span className="text-[28px] max-lg:text-[18px] flex-shrink-0"><FaWhatsapp color="white" /></span>
               <div className="text-left">
-                <p className="text-white font-black uppercase tracking-[2px] text-[0.95rem] leading-none">Falar no WhatsApp</p>
-                {wpp.numero && <p className="text-white/80 text-sm mt-[4px]">{wpp.numero}</p>}
+                <p className="text-white font-black uppercase tracking-[2px] text-[0.95rem] leading-none max-lg:text-[0.75rem] max-lg:tracking-[1px]">Falar no WhatsApp</p>
+                {wpp.numero && <p className="text-white/80 text-sm mt-[4px] max-lg:text-xs">{wpp.numero}</p>}
               </div>
             </div>
           </a>
@@ -57,11 +57,11 @@ export default function ContatoSection() {
             {secundarios.map(({ href, Icon, label, cor }) => (
               <a key={href} href={href} target="_blank" rel="noreferrer" className="no-underline group">
                 <div
-                  className="flex items-center gap-3 px-7 py-4 transition-all duration-300 group-hover:brightness-110 group-hover:scale-[1.03]"
+                  className="flex items-center gap-3 px-7 py-4 transition-all duration-300 group-hover:brightness-110 group-hover:scale-[1.03] max-lg:px-3 max-lg:py-2 max-lg:gap-2"
                   style={{ backgroundColor: cor }}
                 >
-                  <Icon size={20} color="white" />
-                  <span className="text-white font-bold text-sm uppercase tracking-[1px]">{label}</span>
+                  <span className="text-[20px] max-lg:text-[15px] flex-shrink-0"><Icon color="white" /></span>
+                  <span className="text-white font-bold text-sm uppercase tracking-[1px] max-lg:text-[0.7rem] max-lg:tracking-[0.5px]">{label}</span>
                 </div>
               </a>
             ))}

@@ -38,7 +38,7 @@ export default function Footer() {
           </p>
           {sociais.length > 0 && (
             <div className="flex gap-2 mt-1">
-              {sociais.map(({ href, Icon, label }) => (
+              {sociais.map(({ href, Icon }) => (
                 <a key={href} href={href} target="_blank" rel="noreferrer"
                   className="w-9 h-9 flex items-center justify-center bg-white/5 hover:bg-white/15 transition-colors text-white/60 hover:text-white">
                   <Icon size={16} />

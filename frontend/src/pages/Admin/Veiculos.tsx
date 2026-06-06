@@ -9,6 +9,7 @@ import AdminToast from '../../components/AdminToast';
 import EstoqueTable from './sections/veiculos/EstoqueTable';
 import VendidosTable from './sections/veiculos/VendidosTable';
 import AdicionarForm from './sections/veiculos/AdicionarForm';
+import EditarForm from './sections/veiculos/EditarForm';
 import DashboardTab from './sections/veiculos/DashboardTab';
 
 const ABAS = [
@@ -27,6 +28,7 @@ export default function AdminVeiculos() {
   const [confirmId, setConfirmId] = useState<string | null>(null);
   const [confirmAcao, setConfirmAcao] = useState('');
   const [msg, setMsg] = useState('');
+  const [veiculoEditando, setVeiculoEditando] = useState<Veiculo | null>(null);
 
   useEffect(() => { if (!loading && !isLoggedIn) navigate('/login'); }, [isLoggedIn, loading]);
   useEffect(() => { carregarDados(); }, []);
@@ -92,12 +94,12 @@ export default function AdminVeiculos() {
       )}
 
       {/* Tabs estilo segmented control */}
-      <div className="flex gap-1 bg-[#e8e8ea] p-1 rounded-xl w-fit mb-6">
+      <div className="flex gap-1 bg-[#e8e8ea] p-1 rounded-xl mb-6 overflow-x-auto max-sm:w-full">
         {ABAS.map((a) => (
           <button
             key={a.key}
             onClick={() => setAba(a.key)}
-            className={`px-4 py-1.5 rounded-lg text-sm font-semibold border-none cursor-pointer transition-all duration-150 ${
+            className={`px-4 py-1.5 rounded-lg text-sm font-semibold border-none cursor-pointer transition-all duration-150 whitespace-nowrap flex-shrink-0 max-sm:flex-1 max-sm:text-xs max-sm:px-2 ${
               aba === a.key
                 ? 'bg-white shadow-sm text-[#1a1a1a]'
                 : 'bg-transparent text-[#888] hover:text-[#444]'
@@ -117,12 +119,20 @@ export default function AdminVeiculos() {
       {aba === 'dashboard' && (
         <DashboardTab veiculos={veiculos} vendidos={vendidos} onIrParaAba={setAba} />
       )}
-      {aba === 'estoque' && (
+      {aba === 'estoque' && !veiculoEditando && (
         <EstoqueTable
           veiculos={veiculos}
           onToggleOferta={async (id) => { await veiculosApi.toggleOferta(id); await carregarDados(); }}
           onVender={(id) => { setConfirmId(id); setConfirmAcao('vender'); }}
           onRemover={(id) => { setConfirmId(id); setConfirmAcao('remover'); }}
+          onEditar={(v) => setVeiculoEditando(v)}
+        />
+      )}
+      {aba === 'estoque' && veiculoEditando && (
+        <EditarForm
+          veiculo={veiculoEditando}
+          onCancelar={() => setVeiculoEditando(null)}
+          onSuccess={() => { carregarDados(); setVeiculoEditando(null); showMsg('Veículo atualizado!'); }}
         />
       )}
       {aba === 'vendidos' && (

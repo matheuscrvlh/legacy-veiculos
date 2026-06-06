@@ -1,3 +1,5 @@
+import iconSeloOferta from '../../../../assets/icons/public/veiculos/oferta/selo-oferta-empresa.png';
+
 interface Props {
   imagens: string[];
   nome: string;
@@ -5,9 +7,10 @@ interface Props {
   imgAtiva: number;
   onSelect: (i: number) => void;
   soldOverlay?: boolean;
+  oferta?: boolean;
 }
 
-export default function GaleriaVeiculo({ imagens, nome, folder, imgAtiva, onSelect, soldOverlay }: Props) {
+export default function GaleriaVeiculo({ imagens, nome, folder, imgAtiva, onSelect, soldOverlay, oferta }: Props) {
   return (
     <div className="flex-1">
       {/* Imagem principal — proporção 3:4 */}
@@ -17,6 +20,9 @@ export default function GaleriaVeiculo({ imagens, nome, folder, imgAtiva, onSele
           alt={nome}
           className={`w-full h-full object-cover ${soldOverlay ? 'opacity-60' : ''}`}
         />
+        {oferta && !soldOverlay && (
+          <img src={iconSeloOferta} alt="Oferta" className="absolute top-[-5px] left-0 w-[110px] z-10 drop-shadow-md" />
+        )}
         {soldOverlay && (
           <div className="absolute inset-0 flex items-center justify-center">
             <span className="text-white font-bold text-2xl bg-black/60 px-8 py-3 tracking-widest uppercase">VENDIDO</span>

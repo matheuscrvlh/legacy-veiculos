@@ -25,8 +25,8 @@ export default function InstagramPanel() {
       </div>
 
       {/* Card Instagram */}
-      <a href={dados.instagram?.link || '#'} target="_blank" rel="noopener noreferrer" className="no-underline block">
-        <div className="bg-[#181818] overflow-hidden" style={{ transform: 'translateZ(0)' }}>
+      <a href={dados.instagram?.link || '#'} target="_blank" rel="noopener noreferrer" className="no-underline block rounded-2xl overflow-hidden">
+        <div className="bg-[#181818]" style={{ transform: 'translateZ(0)' }}>
 
           {/* Perfil */}
           <div className="flex items-center gap-4 px-5 py-5 border-b border-white/10">
@@ -64,7 +64,7 @@ export default function InstagramPanel() {
 
           {/* CTA */}
           <div
-            className="text-center text-white font-bold text-xs uppercase tracking-[3px] py-4 transition-opacity hover:opacity-90"
+            className="text-center text-white font-bold text-xs uppercase tracking-[3px] py-4 transition-opacity hover:opacity-90 rounded-b-2xl"
             style={{ backgroundColor: 'var(--cor-primaria)' }}
           >
             Ver perfil no Instagram

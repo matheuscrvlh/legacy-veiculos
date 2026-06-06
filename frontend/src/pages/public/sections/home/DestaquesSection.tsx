@@ -67,7 +67,7 @@ export default function DestaquesSection() {
       <div data-aos="fade-up" className="text-center mt-12">
         <Link to="/estoque">
           <button
-            className="border-2 font-bold uppercase text-sm tracking-[3px] px-10 py-4 cursor-pointer transition-all duration-300 hover:text-white hover:scale-[1.03]"
+            className="border-2 font-bold uppercase text-sm tracking-[3px] px-10 py-4 cursor-pointer transition-all duration-300 hover:text-white hover:scale-[1.03] max-lg:text-xs max-lg:tracking-[2px] max-lg:px-6 max-lg:py-3"
             style={{
               borderColor: 'var(--cor-primaria)',
               color: 'var(--cor-primaria)',

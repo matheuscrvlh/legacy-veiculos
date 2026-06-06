@@ -24,11 +24,11 @@ function StatCard({
   return (
     <div
       onClick={onClick}
-      className={`bg-white rounded-xl border border-[#e8e8e8] shadow-sm p-5 flex flex-col gap-1 ${onClick ? 'cursor-pointer hover:shadow-md hover:-translate-y-[1px] transition-all' : ''}`}
+      className={`bg-white rounded-xl border border-[#e8e8e8] shadow-sm p-5 flex flex-col gap-1 overflow-hidden ${onClick ? 'cursor-pointer hover:shadow-md hover:-translate-y-[1px] transition-all' : ''}`}
     >
       <div className="w-2 h-2 rounded-full mb-1" style={{ backgroundColor: accent }} />
       <p className="text-[0.68rem] font-bold text-[#aaa] uppercase tracking-widest">{label}</p>
-      <p className="text-2xl font-extrabold text-[#1a1a1a] leading-none">{value}</p>
+      <p className="text-2xl font-extrabold text-[#1a1a1a] leading-none max-sm:text-sm truncate">{value}</p>
       {sub && <p className="text-xs text-[#aaa] mt-0.5">{sub}</p>}
     </div>
   );
@@ -185,7 +185,7 @@ export default function DashboardTab({ veiculos, vendidos, onIrParaAba }: Props)
                 <div className="aspect-[4/3] rounded-lg overflow-hidden bg-[#1a1a1a] mb-2">
                   <img
                     src={v.Imagens[0] ? `/uploads/vehicles/${v.Imagens[0]}` : '/icons/veiculos/semimagem.png'}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    className="w-full h-full object-cover object-bottom group-hover:scale-105 transition-transform duration-300"
                     alt={v.Nome}
                     onError={(e) => { (e.target as HTMLImageElement).src = '/icons/veiculos/semimagem.png'; }}
                   />
