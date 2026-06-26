@@ -12,14 +12,14 @@ build/
 */build/
 
 # Banco de dados SQLite (dados reais)
-backend/data/*
-!backend/data/.gitkeep
+server/data/*
+!server/data/.gitkeep
 *.sqlite
 *.db
 
 # Uploads (imagens enviadas pelos usuários)
-backend/uploads/*
-!backend/uploads/.gitkeep
+server/uploads/*
+!server/uploads/.gitkeep
 
 # Variáveis de ambiente com segredos reais
 .env

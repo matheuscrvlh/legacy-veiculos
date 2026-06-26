@@ -1,9 +1,9 @@
 name: legacy
 
 services:
-  backend:
-    build: ./backend
-    container_name: legacy-backend
+  server:
+    build: ./server
+    container_name: legacy-server
     restart: unless-stopped
     ports:
       - "3001:3000"
@@ -15,8 +15,8 @@ services:
       ADMIN_USER: ${ADMIN_USER}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
     volumes:
-      - ./backend/data:/app/data
-      - ./backend/uploads:/app/uploads
+      - ./server/data:/app/data
+      - ./server/uploads:/app/uploads
     networks:
       - app-network
     healthcheck:
@@ -25,14 +25,14 @@ services:
       timeout: 10s
       retries: 3
 
-  frontend:
-    build: ./frontend
-    container_name: legacy-frontend
+  client:
+    build: ./client
+    container_name: legacy-client
     restart: unless-stopped
     ports:
       - "8081:80"
     depends_on:
-      backend:
+      server:
         condition: service_healthy
     networks:
       - app-network
