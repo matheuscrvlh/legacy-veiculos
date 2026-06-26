@@ -9,11 +9,11 @@ import Vendidos from './pages/public/Vendidos';
 import DetalhesVeiculo from './pages/public/DetalhesVeiculo';
 import DetalhesVendido from './pages/public/DetalhesVendido';
 import Login from './pages/public/Login';
-import Admin from './pages/admin';
-import AdminVeiculos from './pages/admin/Veiculos';
-import AdminClientes from './pages/admin/Clientes';
-import AdminSobre from './pages/admin/Sobre';
-import AdminUsuarios from './pages/admin/Usuarios';
+import Admin from './pages/Admin';
+import AdminVeiculos from './pages/Admin/Veiculos';
+import AdminClientes from './pages/Admin/Clientes';
+import AdminSobre from './pages/Admin/Sobre';
+import AdminUsuarios from './pages/Admin/Usuarios';
 import ProtectedRoute from './components/ProtectedRoute';
 
 function AnimatedRoutes() {
