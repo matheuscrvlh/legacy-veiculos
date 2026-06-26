@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import AOS from 'aos';
 import { useSobre } from '../../hooks/useSobre';
 import { veiculosApi } from '../../api/veiculos';
 import { vendidosApi } from '../../api/vendidos';
@@ -33,7 +34,7 @@ export default function Estoque() {
     Promise.all([veiculosApi.listar(), vendidosApi.listar()])
       .then(([v, vd]) => { setTodos(v); setVendidos(vd); })
       .catch(() => { setTodos([]); setVendidos([]); })
-      .finally(() => setCarregando(false));
+      .finally(() => { setCarregando(false); setTimeout(() => AOS.refresh(), 50); });
   }, []);
 
   useEffect(() => {

@@ -46,15 +46,27 @@ router.delete('/remover/:id', authMiddleware, (req: Request, res: Response) => {
 });
 
 router.post('/reativar/:id', authMiddleware, (req: Request, res: Response) => {
-  const row = q<VendidoRow>('SELECT * FROM vendidos WHERE id = ?').get(req.params.id);
-  if (!row) { res.status(404).json({ message: 'Veículo não encontrado em vendidos.' }); return; }
+  try {
+    const row = q<VendidoRow>('SELECT * FROM vendidos WHERE id = ?').get(req.params.id);
+    if (!row) { res.status(404).json({ message: 'Veículo não encontrado em vendidos.' }); return; }
 
-  const imagens = JSON.parse(row.imagens || '[]') as string[];
-  imagens.forEach((img) => moveFile(getSoldVehicleImagePath(img), getVehicleImagePath(img)));
+    const imagens = JSON.parse(row.imagens || '[]') as string[];
+    imagens.forEach((img) => moveFile(getSoldVehicleImagePath(img), getVehicleImagePath(img)));
 
-  q(`INSERT INTO veiculos (id, codigo_sequencial, nome, modelo, marca, categoria, combustivel, cambio, cor, portas, km, sobre, opcionais, ano, valor, tipo_veiculo, imagens, oferta) VALUES (@id, @codigo_sequencial, @nome, @modelo, @marca, @categoria, @combustivel, @cambio, @cor, @portas, @km, @sobre, @opcionais, @ano, @valor, @tipo_veiculo, @imagens, @oferta)`).run(row);
-  q('DELETE FROM vendidos WHERE id = ?').run(req.params.id);
-  res.json({ message: 'Veículo reativado com sucesso!' });
+    q(`INSERT INTO veiculos (id, codigo_sequencial, nome, modelo, marca, categoria, combustivel, cambio, cor, portas, km, sobre, opcionais, ano, valor, tipo_veiculo, imagens, oferta) VALUES (@id, @codigo_sequencial, @nome, @modelo, @marca, @categoria, @combustivel, @cambio, @cor, @portas, @km, @sobre, @opcionais, @ano, @valor, @tipo_veiculo, @imagens, @oferta)`).run({
+      id: row.id, codigo_sequencial: row.codigo_sequencial, nome: row.nome,
+      modelo: row.modelo, marca: row.marca, categoria: row.categoria,
+      combustivel: row.combustivel, cambio: row.cambio, cor: row.cor,
+      portas: row.portas, km: row.km, sobre: row.sobre, opcionais: row.opcionais,
+      ano: row.ano, valor: row.valor, tipo_veiculo: row.tipo_veiculo,
+      imagens: row.imagens, oferta: row.oferta,
+    });
+    q('DELETE FROM vendidos WHERE id = ?').run(req.params.id);
+    res.json({ message: 'Veículo reativado com sucesso!' });
+  } catch (err) {
+    console.error('[reativar]', err);
+    res.status(500).json({ message: 'Erro ao reativar veículo.', detail: String(err) });
+  }
 });
 
 export default router;

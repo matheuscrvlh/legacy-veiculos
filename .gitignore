@@ -1,3 +1,6 @@
+# IA
+.claude
+
 # Dependências
 node_modules/
 */node_modules/
@@ -9,12 +12,14 @@ build/
 */build/
 
 # Banco de dados SQLite (dados reais)
-backend/data/
+backend/data/*
+!backend/data/.gitkeep
 *.sqlite
 *.db
 
 # Uploads (imagens enviadas pelos usuários)
-backend/uploads/
+backend/uploads/*
+!backend/uploads/.gitkeep
 
 # Variáveis de ambiente com segredos reais
 .env

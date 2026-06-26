@@ -7,7 +7,7 @@ export default function LocalizacaoSection() {
   if (!loc) return null;
 
   return (
-    <section className="w-full bg-[#181818] flex flex-col lg:flex-row min-h-[480px]">
+    <section className="w-full bg-[#181818] flex flex-col lg:flex-row min-h-[480px] overflow-x-hidden">
       {/* Info */}
       <div data-aos="fade-right" className="lg:w-[40%] flex flex-col justify-center px-[8vw] py-16 max-lg:px-6 max-lg:py-10">
         <p className="text-xs font-bold uppercase tracking-[5px] mb-4" style={{ color: 'var(--cor-primaria)' }}>

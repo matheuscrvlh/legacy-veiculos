@@ -23,7 +23,7 @@ export default function VehicleCard({ veiculo, isVendido = false, detailPath }: 
   return (
     <div
       data-aos="fade-up"
-      className="group relative bg-white shadow-[0px_0px_6px_rgba(0,0,0,0.08)] transition-all duration-[650ms] delay-[40ms] hover:-translate-y-[3px] hover:shadow-[0_8px_22px_rgba(0,0,0,0.11)] flex flex-col cursor-pointer w-[300px] rounded-[10px]"
+      className="group relative bg-white shadow-[0px_0px_6px_rgba(0,0,0,0.08)] transition-all duration-[650ms] delay-[40ms] hover:-translate-y-[3px] hover:shadow-[0_8px_22px_rgba(0,0,0,0.11)] flex flex-col cursor-pointer w-[300px] min-w-[300px] rounded-[10px]"
       onClick={() => navigate(path)}
     >
       {/* Ícone oferta — fora do container da imagem para poder ultrapassar a borda */}

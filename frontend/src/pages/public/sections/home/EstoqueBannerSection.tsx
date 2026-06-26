@@ -3,7 +3,7 @@ import carImg from '../../../../assets/sectionCar/car.png';
 
 export default function EstoqueBannerSection() {
   return (
-    <section className="relative w-full flex h-[420px] overflow-visible max-lg:flex-col max-lg:h-auto">
+    <section className="relative w-full flex h-[420px] overflow-visible max-lg:flex-col max-lg:h-auto max-lg:overflow-x-hidden">
 
       {/* Carro desktop */}
       <img

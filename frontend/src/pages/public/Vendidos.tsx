@@ -29,8 +29,8 @@ export default function Vendidos() {
           <p className="text-base text-[#535353]">Confira os veículos que já foram vendidos</p>
         </div>
         {vendidos.length > 0 ? (
-          <div className="grid justify-center items-center gap-[15px] p-[30px] max-w-[1600px] w-[90vw] rounded-[10px] mx-auto my-[10px] bg-[#FBFBFB] shadow-[inset_0px_0px_5px_rgba(0,0,0,0.11)]"
-            style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(320px, auto))' }}>
+          <div className="grid justify-center gap-4 p-[30px] max-w-[1600px] w-[90vw] rounded-[10px] mx-auto my-[10px] bg-[#FBFBFB] shadow-[inset_0px_0px_5px_rgba(0,0,0,0.11)]"
+            style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(300px, auto))' }}>
             {vendidos.map((v) => <VehicleCard key={v.ID} veiculo={v} isVendido />)}
           </div>
         ) : (

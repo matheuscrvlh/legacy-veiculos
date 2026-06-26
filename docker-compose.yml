@@ -15,8 +15,8 @@ services:
       ADMIN_USER: ${ADMIN_USER}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
     volumes:
-      - backend-data:/app/data
-      - backend-uploads:/app/uploads
+      - ./backend/data:/app/data
+      - ./backend/uploads:/app/uploads
     networks:
       - app-network
     healthcheck:
@@ -37,11 +37,6 @@ services:
     networks:
       - app-network
 
-volumes:
-  backend-data:
-    name: backend-data
-  backend-uploads:
-    name: backend-uploads
 
 networks:
   app-network:

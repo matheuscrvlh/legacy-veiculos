@@ -17,7 +17,11 @@
       "PowerShell(tree \"c:\\\\Users\\\\Matheus Carvalho\\\\Desktop\\\\TRABALHO\\\\DEV\\\\PROJETOS\\\\legacy-veiculos\\\\backend\\\\src\" -L 2)",
       "Bash(Get-ChildItem -Path \"c:\\\\Users\\\\Matheus Carvalho\\\\Desktop\\\\TRABALHO\\\\DEV\\\\PROJETOS\\\\legacy-veiculos\\\\frontend\\\\src\\\\pages\\\\admin\\\\Veiculos\" -Recurse)",
       "Bash(npx tsc *)",
-      "Bash(del \"c:\\\\Users\\\\Matheus Carvalho\\\\Desktop\\\\TRABALHO\\\\DEV\\\\PROJETOS\\\\legacy-veiculos\\\\docker-compose.yaml\")"
+      "Bash(del \"c:\\\\Users\\\\Matheus Carvalho\\\\Desktop\\\\TRABALHO\\\\DEV\\\\PROJETOS\\\\legacy-veiculos\\\\docker-compose.yaml\")",
+      "Bash(New-Item -ItemType File -Force \"c:\\\\Users\\\\adm.matheus\\\\Desktop\\\\Matheus\\\\Desenvolvimento\\\\legacy-veiculos\\\\backend\\\\data\\\\.gitkeep\")",
+      "Bash(Out-Null)",
+      "Bash(New-Item -ItemType File -Force \"c:\\\\Users\\\\adm.matheus\\\\Desktop\\\\Matheus\\\\Desenvolvimento\\\\legacy-veiculos\\\\backend\\\\uploads\\\\.gitkeep\")",
+      "Bash(Write-Output \"criados\")"
     ]
   }
 }
